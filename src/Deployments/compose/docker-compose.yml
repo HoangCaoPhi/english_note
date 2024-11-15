@@ -1,0 +1,6 @@
+services:
+  englishnote.api:
+    image: ${DOCKER_REGISTRY-}englishnoteapi
+    build:
+      context: .
+      dockerfile: ../../EnglishNote.Api/Dockerfile
