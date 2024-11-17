@@ -12,9 +12,11 @@ jobs:
 
     strategy:
       matrix:
-        dotnet-version: [ '9.0.x' ]
+        dotnet-version: [ '8.0.x', '9.0.x' ]
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4       
       - name: Run .NET Build and Test
         uses: ./.github/actions/dotnet-build-and-test
         with:
