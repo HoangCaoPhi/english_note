@@ -17,15 +17,19 @@ runs:
 
     - name: Display dotnet version
       run: dotnet --version
+      shell: bash  
 
     - name: Install dependencies
       run: dotnet restore
+      shell: bash 
 
     - name: Build
       run: dotnet build
+      shell: bash  
 
     - name: Test with dotnet
       run: dotnet test --logger trx --results-directory "${{ inputs.test-results-path }}"
+      shell: bash  
 
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
