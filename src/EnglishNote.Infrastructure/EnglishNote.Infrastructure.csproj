@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\BuildingBlocks\BuildingBlocks.csproj" />
-    <ProjectReference Include="..\EnglishNote.Application\EnglishNote.Application.csproj" />
-    <ProjectReference Include="..\EnglishNote.Domain\EnglishNote.Domain.csproj" />
-  </ItemGroup>
-</Project>
