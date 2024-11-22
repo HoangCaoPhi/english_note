@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EnglishNote.Application.UseCases.Tags.CreateTag;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
@@ -9,9 +11,9 @@ internal class CreateEndpoint : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("", async (CreateTagRequest request) =>
+        app.MapPost("", async (CreateTagRequest request, ISender sender) =>
         {
-            return "Ok";
+            await sender.Send(new CreateTagCommand(request.Name, request.Description));
         })
         .WithTags(EndpointSchema.Tag);
     }

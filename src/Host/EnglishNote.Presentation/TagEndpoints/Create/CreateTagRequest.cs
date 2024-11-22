@@ -1,4 +1,2 @@
 ﻿namespace EnglishNote.Presentation.TagEndpoints.Create;
-internal class CreateTagRequest
-{
-}
+internal record CreateTagRequest(string Name, string? Description);

@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Mapster" />
+    <PackageReference Include="Mapster.DependencyInjection" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="System.Text.RegularExpressions" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EnglishNote.Domain\EnglishNote.Domain.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UseCases\" />
   </ItemGroup>
 </Project>

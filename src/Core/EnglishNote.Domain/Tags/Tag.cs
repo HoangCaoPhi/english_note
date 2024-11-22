@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.Domain;
-using EnglishNote.Domain.Users;
+using EnglishNote.Domain.Identity;
 using EnglishNote.Domain.Words;
 
 namespace EnglishNote.Domain.Tags;
@@ -16,17 +16,20 @@ public class Tag : AggregateRoot
     public IReadOnlyCollection<Word> Words => _words.AsReadOnly();
 
     private readonly List<Word> _words = [];
- 
+
     private Tag() { }
 
-    public Tag(string name, string? description, ApplicationUser user)
+    public static Tag CreateTag(string name, string? description, Guid userId)
     {
-        Id = Guid.CreateVersion7();
-        Name = name;
-        Description = description;
-        UserId = user.Id; 
+        return new Tag()
+        {
+            Id = Guid.CreateVersion7(),
+            Name = name,
+            Description = description,
+            UserId = userId
+        };
     }
-  
+
     public void UpdateName(string name)
     {
         Name = name;

@@ -5,7 +5,7 @@ namespace EnglishNote.Api.Extensions;
 
 public static class MigrationExtensions
 {
-    public static void DbMigrate(this WebApplication app)
+    public static void MigrationDatabase(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationWriteDbContext>();

@@ -2,6 +2,7 @@ using Scalar.AspNetCore;
 using EnglishNote.Infrastructure.Persistence;
 using EnglishNote.Api;
 using EnglishNote.Api.Extensions;
+using EnglishNote.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,8 @@ builder.Services.AddEndpoints(typeof(EnglishNote.Presentation.IAssemblyMarker).A
 
 builder
     .Services
-    .AddPersistence(builder.Configuration);
+    .AddPersistence(builder.Configuration)
+    .AddApplicationLayer();
 
 var app = builder.Build();
 
@@ -28,16 +30,11 @@ if (app.Environment.IsDevelopment())
         options.AddServer(new ScalarServer("https://localhost:7176"));
     });
 
-    app.DbMigrate();
+    app.MigrationDatabase();
 }
 
-app.UseHttpsRedirection();
  
 app.MapEndpoints();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+ 

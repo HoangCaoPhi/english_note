@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.Domain;
+using EnglishNote.Domain.Identity;
 using EnglishNote.Domain.Tags;
-using EnglishNote.Domain.Users;
 using EnglishNote.Domain.VocabularySets;
 
 namespace EnglishNote.Domain.Words;
@@ -22,5 +22,5 @@ public class Word : AggregateRoot
     public Guid VocabularySetId { get; private set; }
 
     private readonly List<Phonetic> _phonetics = [];
-    private readonly List<Meaning> _meanings = []; 
+    private readonly List<Meaning> _meanings = [];
 }

@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.Domain;
+using EnglishNote.Domain.Identity;
 using EnglishNote.Domain.QuizSessions;
-using EnglishNote.Domain.Users;
 using EnglishNote.Domain.Words;
 
 namespace EnglishNote.Domain.VocabularySets;
@@ -20,7 +20,7 @@ public class VocabularySet : AggregateRoot
 
     private readonly List<Word> _words = [];
     public IReadOnlyCollection<Word> Words => _words.AsReadOnly();
- 
+
     private VocabularySet() { }
 
     public VocabularySet(string name, Guid userId, ApplicationUser user, string? description = null, string? thumbnailId = null)
@@ -32,7 +32,7 @@ public class VocabularySet : AggregateRoot
         User = user;
         ThumbnailId = thumbnailId;
     }
- 
+
     public void AddWord(Word word)
     {
         if (!_words.Contains(word))

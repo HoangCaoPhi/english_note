@@ -1,6 +1,4 @@
 ﻿namespace EnglishNote.Application;
-
-public class Class1
+internal interface IAssemblyMarker
 {
-
 }

@@ -3,7 +3,7 @@ using EnglishNote.Domain.VocabularySets;
 using EnglishNote.Domain.Words;
 using Microsoft.AspNetCore.Identity;
 
-namespace EnglishNote.Domain.Users;
+namespace EnglishNote.Domain.Identity;
 public class ApplicationUser : IdentityUser<Guid>
 {
     public string FirstName { get; private set; }

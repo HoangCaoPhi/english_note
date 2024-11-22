@@ -1,12 +1,10 @@
 ﻿using EnglishNote.Domain.Identity;
 using EnglishNote.Domain.QuizSessions;
 using EnglishNote.Domain.Tags;
-using EnglishNote.Domain.Users;
 using EnglishNote.Domain.VocabularySets;
 using EnglishNote.Domain.Words;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace EnglishNote.Infrastructure.Persistence.Contexts;
 
@@ -22,6 +20,7 @@ public class ApplicationWriteDbContext(
 
     public DbSet<QuizSession> QuizSessions { get; set; }
 
+  
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(typeof(IAssemblyMarker).Assembly);

@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.Domain;
-using EnglishNote.Domain.Users;
+using EnglishNote.Domain.Identity;
 using EnglishNote.Domain.VocabularySets;
 
 namespace EnglishNote.Domain.QuizSessions;
@@ -31,7 +31,7 @@ public class QuizSession : AggregateRoot
         StartTime = DateTime.UtcNow;
         Status = QuizSessionStatus.InProgress;
     }
- 
+
     public void CompleteSession(int correctAnswers, int score)
     {
         CorrectAnswers = correctAnswers;
