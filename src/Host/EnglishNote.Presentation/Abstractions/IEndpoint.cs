@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Routing;
 
 namespace EnglishNote.Presentation.Abstractions;
-internal interface IEndpoint
+public interface IEndpoint
 {
+    string EndpointName { get; }
     void MapEndpoint(IEndpointRouteBuilder app);
 }

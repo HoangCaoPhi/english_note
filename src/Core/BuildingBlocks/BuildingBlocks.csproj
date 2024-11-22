@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="Ardalis.Result" />
+    <PackageReference Include="MediatR" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="System.Text.RegularExpressions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extentions\" />
   </ItemGroup>
 </Project>

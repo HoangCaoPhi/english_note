@@ -1,5 +1,7 @@
 using Scalar.AspNetCore;
 using EnglishNote.Infrastructure.Persistence;
+using EnglishNote.Api;
+using EnglishNote.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpoints(typeof(EnglishNote.Presentation.IAssemblyMarker).Assembly);
 
 builder
     .Services
@@ -24,28 +27,13 @@ if (app.Environment.IsDevelopment())
         options.Title = "English Note API";
         options.AddServer(new ScalarServer("https://localhost:7176"));
     });
+
+    app.DbMigrate();
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+ 
+app.MapEndpoints();
 
 app.Run();
 

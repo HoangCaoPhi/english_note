@@ -1,11 +1,11 @@
-﻿using EnglishNote.Domain.Users;
+﻿using BuildingBlocks.Domain;
+using EnglishNote.Domain.Users;
 using EnglishNote.Domain.VocabularySets;
 
 namespace EnglishNote.Domain.QuizSessions;
 
-public class QuizSession
+public class QuizSession : AggregateRoot
 {
-    public Guid Id { get; private set; }
     public Guid VocabularySetId { get; private set; }
     public VocabularySet VocabularySet { get; private set; }
     public DateTime StartTime { get; private set; }

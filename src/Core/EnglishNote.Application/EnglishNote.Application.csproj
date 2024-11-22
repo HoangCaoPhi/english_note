@@ -6,4 +6,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EnglishNote.Domain\EnglishNote.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UseCases\" />
+  </ItemGroup>
 </Project>

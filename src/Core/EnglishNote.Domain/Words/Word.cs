@@ -1,13 +1,26 @@
-﻿namespace EnglishNote.Domain.Words;
+﻿using BuildingBlocks.Domain;
+using EnglishNote.Domain.Tags;
+using EnglishNote.Domain.Users;
+using EnglishNote.Domain.VocabularySets;
 
-public class Word
+namespace EnglishNote.Domain.Words;
+
+public class Word : AggregateRoot
 {
     public string WordText { get; private set; }
-    public IReadOnlyList<Phonetic> Phonetics { get; private set; }
-    public IReadOnlyList<Meaning> Meanings { get; private set; } 
-    public IReadOnlyList<string> SourceUrls { get; private set; }
+    public IReadOnlyList<Phonetic> Phonetics => _phonetics.AsReadOnly();
+    public IReadOnlyList<Meaning> Meanings => _meanings.AsReadOnly();
+    public MemoryLevel? MemoryLevel { get; private set; }
+
+    public Tag Tag { get; private set; }
+    public Guid TagId { get; private set; }
+
+    public Guid UserId { get; private set; }
+    public ApplicationUser User { get; private set; }
+
+    public VocabularySet VocabularySet { get; private set; }
+    public Guid VocabularySetId { get; private set; }
 
     private readonly List<Phonetic> _phonetics = [];
-    private readonly List<Meaning> _meanings = [];
-    private readonly List<string> _sourceUrls = [];
+    private readonly List<Meaning> _meanings = []; 
 }
