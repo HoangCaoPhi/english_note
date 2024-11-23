@@ -47,7 +47,7 @@ public class TransactionBehavior<TRequest, TResponse>(
             return response;
         }
         catch (Exception ex)
-        {
+        {            
             logger.LogError(ex, "Error Handling transaction for {CommandName} ({@Command})", typeName, request);
             throw;
         }

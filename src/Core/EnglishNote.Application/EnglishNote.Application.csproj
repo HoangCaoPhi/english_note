@@ -4,9 +4,11 @@
     <PackageReference Include="Mapster" />
     <PackageReference Include="Mapster.DependencyInjection" />
     <PackageReference Include="System.Net.Http" />
+    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Text.RegularExpressions" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\BuildingBlocks\BuildingBlocks.csproj" />
     <ProjectReference Include="..\EnglishNote.Domain\EnglishNote.Domain.csproj" />
   </ItemGroup>
 </Project>

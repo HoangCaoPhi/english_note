@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 
-namespace EnglishNote.Infrastructure.Persistence;
+namespace EnglishNote.Infrastructure.Persistence.Repositories;
 internal sealed class UnitOfWork(ApplicationWriteDbContext context) : IUnitOfWork
 {
     public DatabaseFacade Database => context.Database;
@@ -25,8 +25,7 @@ internal sealed class UnitOfWork(ApplicationWriteDbContext context) : IUnitOfWor
 
     public async Task CommitTransactionAsync(IDbContextTransaction transaction)
     {
-        if (transaction is null)
-            throw new ArgumentNullException(nameof(transaction));
+        ArgumentNullException.ThrowIfNull(transaction);
 
         if (transaction != _currentTransaction)
             throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");

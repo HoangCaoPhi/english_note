@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Application;
+using EnglishNote.Application.Abtractions.Data;
 using EnglishNote.Domain.Tags;
 using EnglishNote.Infrastructure.Persistence.Contexts;
 using EnglishNote.Infrastructure.Persistence.Repositories;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace EnglishNote.Infrastructure.Persistence;
 public static class AddServiceExtensions
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddRepositoryService()
                 .ConfigureDbContext(configuration);
@@ -31,12 +32,7 @@ public static class AddServiceExtensions
             options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
         });
 
-        services.AddDbContext<ApplicationReadDbContext>(options =>
-        {
-            options
-                .UseSqlServer(configuration.GetConnectionString("SqlServer"))
-                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-        });
+        services.AddScoped<IApplicationReadDbContext, ApplicationReadDbContext>();
 
         return services;
     }

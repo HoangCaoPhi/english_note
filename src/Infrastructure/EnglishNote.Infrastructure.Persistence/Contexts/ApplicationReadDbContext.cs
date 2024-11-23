@@ -1,11 +1,21 @@
-﻿using EnglishNote.Application.Data;
+﻿using EnglishNote.Application.Abtractions.Data;
 using EnglishNote.Domain.Tags;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace EnglishNote.Infrastructure.Persistence.Contexts;
-public class ApplicationReadDbContext
-    (DbContextOptions<ApplicationReadDbContext> options) : 
-    DbContext(options), IApplicationReadDbContextContext
+public class ApplicationReadDbContext(ApplicationWriteDbContext context) : 
+    IApplicationReadDbContext
 {
-    public IQueryable<Tag> GetTags() => Set<Tag>().AsQueryable();
+    public DatabaseFacade Database => context.Database;
+
+    public IQueryable<Tag> GetTags() => GetEntity<Tag>();
+
+    public IQueryable<TEntity> GetEntity<TEntity>() where TEntity : class
+    {
+        return context
+                .Set<TEntity>()
+                .AsNoTracking()
+                .AsQueryable();
+    }
 }

@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Identity;
 namespace EnglishNote.Domain.Identity;
 public class ApplicationUser : IdentityUser<Guid>
 {
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
+    public string? FirstName { get; private set; }
+    public string? LastName { get; private set; }
 
     private readonly List<VocabularySet> _vocabularySet = [];
     public IReadOnlyCollection<VocabularySet> VocabularySets => _vocabularySet.AsReadOnly();

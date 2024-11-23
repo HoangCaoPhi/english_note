@@ -2,10 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace EnglishNote.Presentation.TagEndpoints.Create;
-internal class CreateEndpoint : IEndpoint
+namespace EnglishNote.Presentation.Private.TagEndpoints.CreateTag;
+internal class CreateEndpoint : IPrivateEndpoint
 {
     public string EndpointName => EndpointSchema.Tag;
 
@@ -15,6 +16,7 @@ internal class CreateEndpoint : IEndpoint
         {
             await sender.Send(new CreateTagCommand(request.Name, request.Description));
         })
-        .WithTags(EndpointSchema.Tag);
+        .Produces<Guid>()
+        .Produces<ProblemDetails>(StatusCodes.Status400BadRequest);
     }
 }

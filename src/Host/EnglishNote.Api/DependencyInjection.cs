@@ -1,4 +1,7 @@
-﻿using EnglishNote.Presentation.Abstractions;
+﻿using BuildingBlocks.Extentions;
+using EnglishNote.Domain.Identity;
+using EnglishNote.Infrastructure.Persistence.Contexts;
+using EnglishNote.Presentation.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Reflection;
 
@@ -7,12 +10,13 @@ namespace EnglishNote.Api;
 public static class DependencyInjection
 {
     public static IServiceCollection AddEndpoints(this IServiceCollection services, Assembly assembly)
-    {
+    { 
         ServiceDescriptor[] serviceDescriptors = assembly
             .DefinedTypes
             .Where(type => type is { IsAbstract: false, IsInterface: false } &&
                    type.IsAssignableTo(typeof(IEndpoint)))
-            .Select(type => ServiceDescriptor.Transient(typeof(IEndpoint), type))
+            .Select(type => ServiceDescriptor.Transient(type.ImplementedInterfaces
+                                                            .First(x => x != typeof(IEndpoint)), type))
             .ToArray();
 
         services.TryAddEnumerable(serviceDescriptors);
@@ -20,16 +24,51 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IApplicationBuilder MapEndpoints(this WebApplication app) {
-        IEnumerable<IEndpoint> endpoints = app
-            .Services
-            .GetServices<IEndpoint>();
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    {
+        services.AddHttpContextAccessor();
+        services.AddProblemDetails();
 
-        foreach (var endpoint in endpoints) {
-            var routeGroup = app.MapGroup(endpoint.EndpointName);
-            endpoint.MapEndpoint(routeGroup);
-        }
+        services.AddIdentityApiEndpoints<ApplicationUser>()
+            .AddEntityFrameworkStores<ApplicationWriteDbContext>();
+
+        services.AddAuthorization();
+        return services;
+    }
+
+    public static IApplicationBuilder MapEndpoints(this WebApplication app)
+    {
+        RouteGroupBuilder privateRouteGroup = app
+            .MapGroup("/")
+            .RequireAuthorization();
+
+        RouteGroupBuilder publicRouteGroup = app
+            .MapGroup("/public");
+
+        MapEndpointRoute<IPrivateEndpoint>(app, privateRouteGroup);
+        MapEndpointRoute<IPublicEndpoint>(app, publicRouteGroup);
+
+        app.MapGroup("Identity")
+           .MapIdentityApi<ApplicationUser>()
+           .WithTags("Identity");
 
         return app;
+    }
+
+    private static void MapEndpointRoute<TEndpoint>(
+        WebApplication app,
+        RouteGroupBuilder routeGroupBuilder)
+        where TEndpoint : IEndpoint
+    {
+        IEnumerable<TEndpoint> endpoints = app
+            .Services
+            .GetServices<TEndpoint>();
+ 
+        foreach (var endpoint in endpoints)
+        {
+            var routeGroup = routeGroupBuilder.MapGroup(endpoint.EndpointName)
+                                              .WithTags(endpoint.EndpointName.CapitalizeFirstLetterOfSentence());
+            endpoint.MapEndpoint(routeGroup);
+        }
     }
 }

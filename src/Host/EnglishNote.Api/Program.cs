@@ -1,8 +1,8 @@
-using Scalar.AspNetCore;
-using EnglishNote.Infrastructure.Persistence;
 using EnglishNote.Api;
 using EnglishNote.Api.Extensions;
 using EnglishNote.Application;
+using EnglishNote.Infrastructure;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,8 @@ builder.Services.AddEndpoints(typeof(EnglishNote.Presentation.IAssemblyMarker).A
 
 builder
     .Services
-    .AddPersistence(builder.Configuration)
+    .AddApplicationServices()
+    .AddInfrastructureLayer(builder.Configuration)
     .AddApplicationLayer();
 
 var app = builder.Build();

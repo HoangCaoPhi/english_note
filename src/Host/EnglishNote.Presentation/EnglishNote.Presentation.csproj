@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<PackageReference Include="System.Net.Http" />
+		<PackageReference Include="System.Text.Encodings.Web" />
 		<PackageReference Include="System.Text.RegularExpressions" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Core\BuildingBlocks\BuildingBlocks.csproj" />
 		<ProjectReference Include="..\..\Core\EnglishNote.Application\EnglishNote.Application.csproj" />
+		<ProjectReference Include="..\..\Shared\BuildingBlocks\BuildingBlocks.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
