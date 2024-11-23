@@ -1,4 +1,4 @@
-﻿using EnglishNote.Domain.QuizSessions;
+﻿using EnglishNote.Domain.AggregatesModel.QuizSessions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

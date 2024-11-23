@@ -1,4 +1,4 @@
-﻿using EnglishNote.Domain.Tags;
+﻿using EnglishNote.Domain.AggregatesModel.Tags;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace EnglishNote.Application.Abtractions.Data;

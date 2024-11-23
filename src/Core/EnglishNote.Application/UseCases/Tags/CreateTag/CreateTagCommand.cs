@@ -1,5 +1,4 @@
-﻿using BuildingBlocks;
-using BuildingBlocks.Application;
+﻿using EnglishNote.Application.Abtractions.Commands;
 
 namespace EnglishNote.Application.UseCases.Tags.CreateTag;
 public record CreateTagCommand(

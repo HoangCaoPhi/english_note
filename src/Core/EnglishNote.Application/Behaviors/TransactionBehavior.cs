@@ -1,8 +1,8 @@
-﻿using BuildingBlocks.Application;
-using BuildingBlocks.Extentions;
+﻿using EnglishNote.Application.Abtractions.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Shared.Extentions;
 
 namespace EnglishNote.Application.Behaviors;
 public class TransactionBehavior<TRequest, TResponse>(

@@ -1,4 +1,4 @@
-﻿using EnglishNote.Domain.Words;
+﻿using EnglishNote.Domain.AggregatesModel.Words;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

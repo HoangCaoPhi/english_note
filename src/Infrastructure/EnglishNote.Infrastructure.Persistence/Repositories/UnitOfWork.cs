@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Application;
+﻿using EnglishNote.Application.Abtractions.Data;
 using EnglishNote.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;

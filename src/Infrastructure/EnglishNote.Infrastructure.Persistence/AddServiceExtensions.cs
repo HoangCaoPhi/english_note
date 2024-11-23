@@ -1,6 +1,5 @@
-﻿using BuildingBlocks.Application;
-using EnglishNote.Application.Abtractions.Data;
-using EnglishNote.Domain.Tags;
+﻿using EnglishNote.Application.Abtractions.Data;
+using EnglishNote.Domain.AggregatesModel.Tags;
 using EnglishNote.Infrastructure.Persistence.Contexts;
 using EnglishNote.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;

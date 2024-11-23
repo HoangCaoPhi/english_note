@@ -7,6 +7,6 @@
     <PackageReference Include="System.Text.RegularExpressions" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\BuildingBlocks\BuildingBlocks.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
 </Project>

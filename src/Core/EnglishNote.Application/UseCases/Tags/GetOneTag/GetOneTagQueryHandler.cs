@@ -1,9 +1,9 @@
-﻿using BuildingBlocks;
-using BuildingBlocks.Application;
-using EnglishNote.Application.Abtractions.Data;
-using EnglishNote.Domain.Tags;
+﻿using EnglishNote.Application.Abtractions.Data;
+using EnglishNote.Application.Abtractions.Queries;
+using EnglishNote.Domain.AggregatesModel.Tags;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Shared;
 
 namespace EnglishNote.Application.UseCases.Tags.GetOneTag;
 internal class GetOneTagQueryHandler(IApplicationReadDbContext context) :

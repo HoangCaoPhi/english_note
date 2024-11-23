@@ -1,4 +1,4 @@
-﻿using EnglishNote.Domain.Identity;
+﻿using EnglishNote.Domain.AggregatesModel.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

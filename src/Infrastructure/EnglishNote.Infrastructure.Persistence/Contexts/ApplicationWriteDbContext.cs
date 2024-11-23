@@ -1,8 +1,8 @@
-﻿using EnglishNote.Domain.Identity;
-using EnglishNote.Domain.QuizSessions;
-using EnglishNote.Domain.Tags;
-using EnglishNote.Domain.VocabularySets;
-using EnglishNote.Domain.Words;
+﻿using EnglishNote.Domain.AggregatesModel.Identity;
+using EnglishNote.Domain.AggregatesModel.QuizSessions;
+using EnglishNote.Domain.AggregatesModel.Tags;
+using EnglishNote.Domain.AggregatesModel.VocabularySets;
+using EnglishNote.Domain.AggregatesModel.Words;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

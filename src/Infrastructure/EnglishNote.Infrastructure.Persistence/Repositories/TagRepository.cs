@@ -1,4 +1,4 @@
-﻿using EnglishNote.Domain.Tags;
+﻿using EnglishNote.Domain.AggregatesModel.Tags;
 using EnglishNote.Infrastructure.Persistence.Contexts;
 
 namespace EnglishNote.Infrastructure.Persistence.Repositories;

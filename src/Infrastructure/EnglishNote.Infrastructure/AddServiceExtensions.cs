@@ -1,4 +1,4 @@
-﻿using BuildingBlocks;
+﻿using EnglishNote.Application.Abtractions.Authentication;
 using EnglishNote.Infrastructure.Authentication;
 using EnglishNote.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;

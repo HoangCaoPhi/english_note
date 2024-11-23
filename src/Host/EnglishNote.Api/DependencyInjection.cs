@@ -1,8 +1,8 @@
-﻿using BuildingBlocks.Extentions;
-using EnglishNote.Domain.Identity;
+﻿using EnglishNote.Domain.AggregatesModel.Identity;
 using EnglishNote.Infrastructure.Persistence.Contexts;
 using EnglishNote.Presentation.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Shared.Extentions;
 using System.Reflection;
 
 namespace EnglishNote.Api;
@@ -16,7 +16,7 @@ public static class DependencyInjection
             .Where(type => type is { IsAbstract: false, IsInterface: false } &&
                    type.IsAssignableTo(typeof(IEndpoint)))
             .Select(type => ServiceDescriptor.Transient(type.ImplementedInterfaces
-                                                            .First(x => x != typeof(IEndpoint)), type))
+                     .First(x => x != typeof(IEndpoint)), type))
             .ToArray();
 
         services.TryAddEnumerable(serviceDescriptors);

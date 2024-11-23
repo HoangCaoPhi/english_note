@@ -26,7 +26,6 @@
  
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\EnglishNote.Infrastructure\EnglishNote.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Shared\BuildingBlocks\BuildingBlocks.csproj" />
     <ProjectReference Include="..\EnglishNote.Presentation\EnglishNote.Presentation.csproj" />
   </ItemGroup>
  

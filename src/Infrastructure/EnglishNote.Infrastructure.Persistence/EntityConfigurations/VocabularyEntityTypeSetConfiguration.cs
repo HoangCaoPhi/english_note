@@ -1,4 +1,4 @@
-﻿using EnglishNote.Domain.VocabularySets;
+﻿using EnglishNote.Domain.AggregatesModel.VocabularySets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

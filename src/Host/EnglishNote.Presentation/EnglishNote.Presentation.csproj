@@ -6,7 +6,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Core\EnglishNote.Application\EnglishNote.Application.csproj" />
-		<ProjectReference Include="..\..\Shared\BuildingBlocks\BuildingBlocks.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,5 +1,5 @@
 ﻿using EnglishNote.Application.Abtractions.Data;
-using EnglishNote.Domain.Tags;
+using EnglishNote.Domain.AggregatesModel.Tags;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 

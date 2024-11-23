@@ -1,4 +1,4 @@
-﻿using BuildingBlocks;
+﻿using EnglishNote.Application.Abtractions.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 

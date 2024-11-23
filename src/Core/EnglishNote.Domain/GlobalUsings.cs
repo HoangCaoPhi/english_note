@@ -1,1 +1,1 @@
-﻿global using BuildingBlocks;
+﻿global using Shared;
