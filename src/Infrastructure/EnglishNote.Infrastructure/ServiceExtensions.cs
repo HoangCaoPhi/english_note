@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EnglishNote.Infrastructure;
 
-public static class AddServiceExtensions
+public static class ServiceExtensions
 {
     public static IServiceCollection AddInfrastructureLayer(
         this IServiceCollection services, 

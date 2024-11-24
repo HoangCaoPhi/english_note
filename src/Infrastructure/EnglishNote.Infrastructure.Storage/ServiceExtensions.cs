@@ -1,6 +1,6 @@
 ﻿namespace EnglishNote.Infrastructure.Storage;
 
-public class Class1
+public class ServiceExtensions
 {
 
 }

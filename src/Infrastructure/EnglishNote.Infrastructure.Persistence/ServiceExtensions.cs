@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EnglishNote.Infrastructure.Persistence;
-public static class AddServiceExtensions
+public static class ServiceExtensions
 {
     public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
     {

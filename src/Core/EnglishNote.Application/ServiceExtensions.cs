@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace EnglishNote.Application;
 
-public static class AddServiceExtensions
+public static class ServiceExtensions
 {
     private readonly static Assembly[] Assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
