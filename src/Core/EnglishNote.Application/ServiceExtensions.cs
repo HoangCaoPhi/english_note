@@ -1,5 +1,4 @@
 ﻿using EnglishNote.Application.Behaviors;
-using FluentValidation;
 using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,12 +39,6 @@ public static class ServiceExtensions
         services.AddSingleton(globalConfig);
         services.AddScoped<IMapper, ServiceMapper>();
 
-        return services;
-    }
-
-    public static IServiceCollection ConfigureFluentValidation(this IServiceCollection services)
-    {
-        services.AddValidatorsFromAssembly(typeof(IAssemblyMarker).Assembly, includeInternalTypes: true);
         return services;
     }
 }

@@ -1,8 +1,12 @@
-﻿using EnglishNote.Domain.AggregatesModel.Identity;
+﻿using EnglishNote.Api.Filters;
+using EnglishNote.Api.Middlewares;
+using EnglishNote.Domain.AggregatesModel.Identity;
 using EnglishNote.Infrastructure.Persistence.Contexts;
 using EnglishNote.Presentation.Abstractions;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shared.Extentions;
+using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
 using System.Reflection;
 
 namespace EnglishNote.Api;
@@ -10,7 +14,7 @@ namespace EnglishNote.Api;
 public static class DependencyInjection
 {
     public static IServiceCollection AddEndpoints(this IServiceCollection services, Assembly assembly)
-    { 
+    {
         ServiceDescriptor[] serviceDescriptors = assembly
             .DefinedTypes
             .Where(type => type is { IsAbstract: false, IsInterface: false } &&
@@ -28,21 +32,38 @@ public static class DependencyInjection
     {
         services.AddHttpContextAccessor();
         services.AddProblemDetails();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
 
         services.AddIdentityApiEndpoints<ApplicationUser>()
             .AddEntityFrameworkStores<ApplicationWriteDbContext>();
+
+        services.ConfigureFluentValidation();
 
         services.AddAuthorization();
         return services;
     }
 
+    public static IServiceCollection ConfigureFluentValidation(this IServiceCollection services)
+    {
+        services.AddValidatorsFromAssembly(typeof(Presentation.IAssemblyMarker).Assembly, includeInternalTypes: true);
+        services.AddFluentValidationAutoValidation(configuration =>
+        {
+            configuration.OverrideDefaultResultFactoryWith<ValidationResultFactory>();
+        });
+        return services;
+    }
+ 
     public static IApplicationBuilder MapEndpoints(this WebApplication app)
     {
-        RouteGroupBuilder privateRouteGroup = app
+        RouteGroupBuilder commonRoute = app.MapGroup("/")
+            .AddEndpointFilter<HandleResultFilter>()
+            .AddFluentValidationAutoValidation();
+
+        RouteGroupBuilder privateRouteGroup = commonRoute
             .MapGroup("/")
             .RequireAuthorization();
 
-        RouteGroupBuilder publicRouteGroup = app
+        RouteGroupBuilder publicRouteGroup = commonRoute
             .MapGroup("/public");
 
         MapEndpointRoute<IPrivateEndpoint>(app, privateRouteGroup);
@@ -63,7 +84,7 @@ public static class DependencyInjection
         IEnumerable<TEndpoint> endpoints = app
             .Services
             .GetServices<TEndpoint>();
- 
+
         foreach (var endpoint in endpoints)
         {
             var routeGroup = routeGroupBuilder.MapGroup(endpoint.EndpointName)

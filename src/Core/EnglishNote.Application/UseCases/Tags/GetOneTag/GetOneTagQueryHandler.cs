@@ -16,7 +16,7 @@ internal class GetOneTagQueryHandler(IApplicationReadDbContext context) :
                     .Where(x => x.Id == request.TagId)
                     .ProjectToType<GetOneTagViewModel>()
                     .FirstOrDefaultAsync(cancellationToken);
-
+ 
         if (data is null)
             return Result<GetOneTagViewModel>.Failure(TagErrors.NotFound);
 

@@ -1,4 +1,2 @@
 ﻿namespace EnglishNote.Presentation;
-public interface IAssemblyMarker
-{
-}
+public interface IAssemblyMarker;

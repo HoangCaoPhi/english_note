@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Reflection;
 
@@ -22,6 +23,10 @@ internal sealed class Test : IPublicEndpoint
                 MachineName = machineName,
                 BuildTime = buildTime.ToString("yyyy-MM-dd HH:mm:ss")
             };
-        });
+        }) 
+       .WithSummary("This is a summary.")
+       .WithDescription("This is a description.")
+       .WithName("This is a Name")
+       .WithDisplayName("This is a DisplayName");
     }
 }
