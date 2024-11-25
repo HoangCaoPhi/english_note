@@ -1,4 +1,5 @@
 ﻿using EnglishNote.Api.Filters;
+using EnglishNote.Api.Infrastructure.Filters;
 using EnglishNote.Api.Middlewares;
 using EnglishNote.Domain.AggregatesModel.Identity;
 using EnglishNote.Infrastructure.Persistence.Contexts;
@@ -61,9 +62,11 @@ public static class DependencyInjection
 
         RouteGroupBuilder privateRouteGroup = commonRoute
             .MapGroup("/")
+            .WithGroupName("internal")
             .RequireAuthorization();
 
         RouteGroupBuilder publicRouteGroup = commonRoute
+            .WithGroupName("public")
             .MapGroup("/public");
 
         MapEndpointRoute<IPrivateEndpoint>(app, privateRouteGroup);

@@ -1,5 +1,6 @@
 using EnglishNote.Api;
-using EnglishNote.Api.Extensions;
+using EnglishNote.Api.Infrastructure.Extensions;
+using EnglishNote.Api.Infrastructure.OpenApi.Transformers;
 using EnglishNote.Application;
 using EnglishNote.Infrastructure;
 using Scalar.AspNetCore;
@@ -8,8 +9,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+ 
 
+builder.Services.AddOpenApi("internal", options =>
+{
+    options.AddDocumentTransformer<BasicOperationTransformer>();
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+});
+
+builder.Services.AddOpenApi("public", options =>
+{
+    options.AddDocumentTransformer<BasicOperationTransformer>();
+});
+ 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddEndpoints(typeof(EnglishNote.Presentation.IAssemblyMarker).Assembly);
 
@@ -32,7 +44,7 @@ if (app.Environment.IsDevelopment())
         options.Title = "English Note API";
         options.AddServer(new ScalarServer("https://localhost:7176"));
     });
-
+ 
     app.MigrationDatabase();
 }
 

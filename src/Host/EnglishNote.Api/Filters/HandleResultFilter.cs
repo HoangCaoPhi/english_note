@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shared;
 
 namespace EnglishNote.Api.Filters;
@@ -10,7 +9,7 @@ public class HandleResultFilter : IEndpointFilter
     {
         var result = await next(context);
 
-        if(result is Result { IsFailure: true} error)
+        if (result is Result { IsFailure: true } error)
         {
             return Results.BadRequest(new ProblemDetails()
             {

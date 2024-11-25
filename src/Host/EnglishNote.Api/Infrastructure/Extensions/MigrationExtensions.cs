@@ -1,7 +1,7 @@
 ﻿using EnglishNote.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace EnglishNote.Api.Extensions;
+namespace EnglishNote.Api.Infrastructure.Extensions;
 
 public static class MigrationExtensions
 {
