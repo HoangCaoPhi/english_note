@@ -14,8 +14,7 @@ public static class ServiceExtensions
     {
         services
             .ConfigureMediatR()
-            .ConfigureMapster()
-            .ConfigureFluentValidation();
+            .ConfigureMapster();
 
         return services;
     }
