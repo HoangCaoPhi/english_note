@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EnglishNote.Api.Middlewares;
 
-public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger,
+    IHostEnvironment hostEnvironment) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
@@ -14,6 +15,14 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
             Type = "ServerError",
             Detail = "An error occurred while processing your request. Please try again later."
         };
+
+        if (hostEnvironment.IsDevelopment())
+        {
+            problemDetails.Extensions = new Dictionary<string, object?>()
+            {
+                ["errors"] = exception.Message
+            };
+        }
 
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken).ConfigureAwait(false);
 
