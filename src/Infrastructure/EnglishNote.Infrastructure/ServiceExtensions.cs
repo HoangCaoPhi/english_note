@@ -1,6 +1,8 @@
-﻿using EnglishNote.Application.Abtractions.Authentication;
+﻿using EnglishNote.Application.Abtractions;
+using EnglishNote.Application.Abtractions.Authentication;
 using EnglishNote.Infrastructure.Authentication;
 using EnglishNote.Infrastructure.Persistence;
+using EnglishNote.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,8 +16,18 @@ public static class ServiceExtensions
     {
         services.AddScoped<IIdentityService, IdentityService>();
 
-        services.AddPersistenceLayer(configuration);
+        services
+            .AddServiesLayer()
+            .AddPersistenceLayer(configuration);
         
         return services;
     }
+
+    public static IServiceCollection AddServiesLayer(this IServiceCollection services)
+    {
+        services.AddScoped<IGuidGenerator, GuidGenerator>();
+        services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+
+        return services;
+    } 
 }

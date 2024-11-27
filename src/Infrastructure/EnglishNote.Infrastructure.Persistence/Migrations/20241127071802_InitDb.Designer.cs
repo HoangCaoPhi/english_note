@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnglishNote.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationWriteDbContext))]
-    [Migration("20241123052016_InitDb")]
+    [Migration("20241127071802_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EnglishNote.Domain.Identity.ApplicationRole", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Identity.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,7 +127,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.QuizSessions.QuizSession", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.QuizSessions.QuizSession", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,7 +167,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.ToTable("QuizSessions");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.Tags.Tag", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Tags.Tag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -193,7 +193,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.VocabularySets.VocabularySet", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.VocabularySets.VocabularySet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -225,7 +225,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.ToTable("VocabularySets");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.Words.Word", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Words.Word", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,13 +235,13 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("TagId")
+                    b.Property<Guid?>("TagId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("VocabularySetId")
+                    b.Property<Guid?>("VocabularySetId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WordText")
@@ -363,17 +363,17 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.QuizSessions.QuizSession", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.QuizSessions.QuizSession", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", "User")
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EnglishNote.Domain.VocabularySets.VocabularySet", "VocabularySet")
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.VocabularySets.VocabularySet", "VocabularySet")
                         .WithOne("QuizSession")
-                        .HasForeignKey("EnglishNote.Domain.QuizSessions.QuizSession", "VocabularySetId")
+                        .HasForeignKey("EnglishNote.Domain.AggregatesModel.QuizSessions.QuizSession", "VocabularySetId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -382,9 +382,9 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.Navigation("VocabularySet");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.Tags.Tag", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Tags.Tag", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", "User")
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", "User")
                         .WithMany("Tags")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -393,9 +393,9 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.VocabularySets.VocabularySet", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.VocabularySets.VocabularySet", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", "User")
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", "User")
                         .WithMany("VocabularySets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -404,27 +404,25 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.Words.Word", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Words.Word", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Tags.Tag", "Tag")
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Tags.Tag", "Tag")
                         .WithMany("Words")
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", "User")
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", "User")
                         .WithMany("Words")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EnglishNote.Domain.VocabularySets.VocabularySet", "VocabularySet")
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.VocabularySets.VocabularySet", "VocabularySet")
                         .WithMany("Words")
                         .HasForeignKey("VocabularySetId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.OwnsMany("EnglishNote.Domain.Words.Meaning", "Meanings", b1 =>
+                    b.OwnsMany("EnglishNote.Domain.AggregatesModel.Words.WordMeaning", "Meanings", b1 =>
                         {
                             b1.Property<Guid>("WordId")
                                 .HasColumnType("uniqueidentifier");
@@ -436,28 +434,26 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
                             b1.Property<string>("CefrLevel")
-                                .IsRequired()
                                 .HasMaxLength(10)
                                 .HasColumnType("nvarchar(10)");
 
                             b1.Property<string>("PartOfSpeech")
-                                .IsRequired()
                                 .HasMaxLength(50)
                                 .HasColumnType("nvarchar(50)");
 
                             b1.HasKey("WordId", "Id");
 
-                            b1.ToTable("Meaning");
+                            b1.ToTable("WordMeaning");
 
                             b1.WithOwner()
                                 .HasForeignKey("WordId");
 
-                            b1.OwnsMany("EnglishNote.Domain.Words.Definition", "Definitions", b2 =>
+                            b1.OwnsMany("EnglishNote.Domain.AggregatesModel.Words.Definition", "Definitions", b2 =>
                                 {
-                                    b2.Property<Guid>("MeaningWordId")
+                                    b2.Property<Guid>("WordMeaningWordId")
                                         .HasColumnType("uniqueidentifier");
 
-                                    b2.Property<int>("MeaningId")
+                                    b2.Property<int>("WordMeaningId")
                                         .HasColumnType("int");
 
                                     b2.Property<int>("Id")
@@ -471,19 +467,19 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                                         .HasMaxLength(1024)
                                         .HasColumnType("nvarchar(1024)");
 
-                                    b2.HasKey("MeaningWordId", "MeaningId", "Id");
+                                    b2.HasKey("WordMeaningWordId", "WordMeaningId", "Id");
 
                                     b2.ToTable("Definition");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("MeaningWordId", "MeaningId");
+                                        .HasForeignKey("WordMeaningWordId", "WordMeaningId");
 
-                                    b2.OwnsMany("EnglishNote.Domain.Words.Antonym", "Antonyms", b3 =>
+                                    b2.OwnsMany("EnglishNote.Domain.AggregatesModel.Words.Antonym", "Antonyms", b3 =>
                                         {
-                                            b3.Property<Guid>("DefinitionMeaningWordId")
+                                            b3.Property<Guid>("DefinitionWordMeaningWordId")
                                                 .HasColumnType("uniqueidentifier");
 
-                                            b3.Property<int>("DefinitionMeaningId")
+                                            b3.Property<int>("DefinitionWordMeaningId")
                                                 .HasColumnType("int");
 
                                             b3.Property<int>("DefinitionId")
@@ -500,20 +496,20 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                                                 .HasMaxLength(126)
                                                 .HasColumnType("nvarchar(126)");
 
-                                            b3.HasKey("DefinitionMeaningWordId", "DefinitionMeaningId", "DefinitionId", "Id");
+                                            b3.HasKey("DefinitionWordMeaningWordId", "DefinitionWordMeaningId", "DefinitionId", "Id");
 
                                             b3.ToTable("Antonym");
 
                                             b3.WithOwner()
-                                                .HasForeignKey("DefinitionMeaningWordId", "DefinitionMeaningId", "DefinitionId");
+                                                .HasForeignKey("DefinitionWordMeaningWordId", "DefinitionWordMeaningId", "DefinitionId");
                                         });
 
-                                    b2.OwnsMany("EnglishNote.Domain.Words.Example", "Examples", b3 =>
+                                    b2.OwnsMany("EnglishNote.Domain.AggregatesModel.Words.Example", "Examples", b3 =>
                                         {
-                                            b3.Property<Guid>("DefinitionMeaningWordId")
+                                            b3.Property<Guid>("DefinitionWordMeaningWordId")
                                                 .HasColumnType("uniqueidentifier");
 
-                                            b3.Property<int>("DefinitionMeaningId")
+                                            b3.Property<int>("DefinitionWordMeaningId")
                                                 .HasColumnType("int");
 
                                             b3.Property<int>("DefinitionId")
@@ -530,20 +526,20 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                                                 .HasMaxLength(1024)
                                                 .HasColumnType("nvarchar(1024)");
 
-                                            b3.HasKey("DefinitionMeaningWordId", "DefinitionMeaningId", "DefinitionId", "Id");
+                                            b3.HasKey("DefinitionWordMeaningWordId", "DefinitionWordMeaningId", "DefinitionId", "Id");
 
                                             b3.ToTable("Example");
 
                                             b3.WithOwner()
-                                                .HasForeignKey("DefinitionMeaningWordId", "DefinitionMeaningId", "DefinitionId");
+                                                .HasForeignKey("DefinitionWordMeaningWordId", "DefinitionWordMeaningId", "DefinitionId");
                                         });
 
-                                    b2.OwnsMany("EnglishNote.Domain.Words.Synonym", "Synonyms", b3 =>
+                                    b2.OwnsMany("EnglishNote.Domain.AggregatesModel.Words.Synonym", "Synonyms", b3 =>
                                         {
-                                            b3.Property<Guid>("DefinitionMeaningWordId")
+                                            b3.Property<Guid>("DefinitionWordMeaningWordId")
                                                 .HasColumnType("uniqueidentifier");
 
-                                            b3.Property<int>("DefinitionMeaningId")
+                                            b3.Property<int>("DefinitionWordMeaningId")
                                                 .HasColumnType("int");
 
                                             b3.Property<int>("DefinitionId")
@@ -560,12 +556,12 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                                                 .HasMaxLength(126)
                                                 .HasColumnType("nvarchar(126)");
 
-                                            b3.HasKey("DefinitionMeaningWordId", "DefinitionMeaningId", "DefinitionId", "Id");
+                                            b3.HasKey("DefinitionWordMeaningWordId", "DefinitionWordMeaningId", "DefinitionId", "Id");
 
                                             b3.ToTable("Synonym");
 
                                             b3.WithOwner()
-                                                .HasForeignKey("DefinitionMeaningWordId", "DefinitionMeaningId", "DefinitionId");
+                                                .HasForeignKey("DefinitionWordMeaningWordId", "DefinitionWordMeaningId", "DefinitionId");
                                         });
 
                                     b2.Navigation("Antonyms");
@@ -578,7 +574,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                             b1.Navigation("Definitions");
                         });
 
-                    b.OwnsMany("EnglishNote.Domain.Words.Phonetic", "Phonetics", b1 =>
+                    b.OwnsMany("EnglishNote.Domain.AggregatesModel.Words.WordPhonetic", "Phonetics", b1 =>
                         {
                             b1.Property<Guid>("WordId")
                                 .HasColumnType("uniqueidentifier");
@@ -590,12 +586,10 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
 
                             b1.Property<string>("Audio")
-                                .IsRequired()
                                 .HasMaxLength(500)
                                 .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("CustomAudio")
-                                .IsRequired()
                                 .HasMaxLength(36)
                                 .HasColumnType("nvarchar(36)");
 
@@ -606,7 +600,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("WordId", "Id");
 
-                            b1.ToTable("Phonetic");
+                            b1.ToTable("WordPhonetic");
 
                             b1.WithOwner()
                                 .HasForeignKey("WordId");
@@ -625,7 +619,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationRole", null)
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -634,7 +628,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", null)
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -643,7 +637,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", null)
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -652,13 +646,13 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationRole", null)
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", null)
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -667,14 +661,14 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("EnglishNote.Domain.Identity.ApplicationUser", null)
+                    b.HasOne("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Identity.ApplicationUser", b =>
                 {
                     b.Navigation("Tags");
 
@@ -683,12 +677,12 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     b.Navigation("Words");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.Tags.Tag", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.Tags.Tag", b =>
                 {
                     b.Navigation("Words");
                 });
 
-            modelBuilder.Entity("EnglishNote.Domain.VocabularySets.VocabularySet", b =>
+            modelBuilder.Entity("EnglishNote.Domain.AggregatesModel.VocabularySets.VocabularySet", b =>
                 {
                     b.Navigation("QuizSession")
                         .IsRequired();

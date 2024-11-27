@@ -3,9 +3,19 @@
 namespace EnglishNote.Domain.AggregatesModel.Words;
 public class Antonym : ValueObject
 {
-    public string Value { get; private set; }
+    private Antonym() { }
+
+    public string? Value { get; private set; }
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return Value;
+    }
+
+    internal static Antonym Create(string value)
+    {
+        return new Antonym()
+        {
+            Value = value
+        };
     }
 }

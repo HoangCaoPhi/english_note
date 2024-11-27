@@ -25,11 +25,9 @@ internal sealed class WordEntityTypeConfiguration : IEntityTypeConfiguration<Wor
                    .HasMaxLength(500);
 
                  phoneticBuilder.Property(x => x.Audio)
-                   .IsRequired()
                    .HasMaxLength(500);
 
                  phoneticBuilder.Property(x => x.CustomAudio)
-                   .IsRequired()
                    .HasMaxLength(36);
              });
 
@@ -38,10 +36,12 @@ internal sealed class WordEntityTypeConfiguration : IEntityTypeConfiguration<Wor
             {
                 meaningBuilder
                     .Property(x => x.CefrLevel)
+                    .HasConversion<string>()
                     .HasMaxLength(10);
 
                 meaningBuilder
                     .Property(x => x.PartOfSpeech)
+                    .HasConversion<string>()
                     .HasMaxLength(50);
 
                 meaningBuilder
@@ -49,6 +49,7 @@ internal sealed class WordEntityTypeConfiguration : IEntityTypeConfiguration<Wor
                     {
                         definitionBuilder
                             .Property(x => x.DefinitionText)
+                            .IsRequired()
                             .HasMaxLength(1024);
 
                         definitionBuilder

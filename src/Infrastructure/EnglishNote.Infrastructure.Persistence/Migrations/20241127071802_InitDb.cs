@@ -238,9 +238,9 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WordText = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     MemoryLevel = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    TagId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TagId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VocabularySetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    VocabularySetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -266,20 +266,20 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meaning",
+                name: "WordMeaning",
                 columns: table => new
                 {
                     WordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PartOfSpeech = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CefrLevel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    PartOfSpeech = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CefrLevel = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meaning", x => new { x.WordId, x.Id });
+                    table.PrimaryKey("PK_WordMeaning", x => new { x.WordId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Meaning_Words_WordId",
+                        name: "FK_WordMeaning_Words_WordId",
                         column: x => x.WordId,
                         principalTable: "Words",
                         principalColumn: "Id",
@@ -287,21 +287,21 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Phonetic",
+                name: "WordPhonetic",
                 columns: table => new
                 {
                     WordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Audio = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    CustomAudio = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false)
+                    Audio = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CustomAudio = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Phonetic", x => new { x.WordId, x.Id });
+                    table.PrimaryKey("PK_WordPhonetic", x => new { x.WordId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Phonetic_Words_WordId",
+                        name: "FK_WordPhonetic_Words_WordId",
                         column: x => x.WordId,
                         principalTable: "Words",
                         principalColumn: "Id",
@@ -312,19 +312,19 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 name: "Definition",
                 columns: table => new
                 {
-                    MeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MeaningId = table.Column<int>(type: "int", nullable: false),
+                    WordMeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WordMeaningId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DefinitionText = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Definition", x => new { x.MeaningWordId, x.MeaningId, x.Id });
+                    table.PrimaryKey("PK_Definition", x => new { x.WordMeaningWordId, x.WordMeaningId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Definition_Meaning_MeaningWordId_MeaningId",
-                        columns: x => new { x.MeaningWordId, x.MeaningId },
-                        principalTable: "Meaning",
+                        name: "FK_Definition_WordMeaning_WordMeaningWordId_WordMeaningId",
+                        columns: x => new { x.WordMeaningWordId, x.WordMeaningId },
+                        principalTable: "WordMeaning",
                         principalColumns: new[] { "WordId", "Id" },
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -333,8 +333,8 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 name: "Antonym",
                 columns: table => new
                 {
-                    DefinitionMeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DefinitionMeaningId = table.Column<int>(type: "int", nullable: false),
+                    DefinitionWordMeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DefinitionWordMeaningId = table.Column<int>(type: "int", nullable: false),
                     DefinitionId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -342,12 +342,12 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Antonym", x => new { x.DefinitionMeaningWordId, x.DefinitionMeaningId, x.DefinitionId, x.Id });
+                    table.PrimaryKey("PK_Antonym", x => new { x.DefinitionWordMeaningWordId, x.DefinitionWordMeaningId, x.DefinitionId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Antonym_Definition_DefinitionMeaningWordId_DefinitionMeaningId_DefinitionId",
-                        columns: x => new { x.DefinitionMeaningWordId, x.DefinitionMeaningId, x.DefinitionId },
+                        name: "FK_Antonym_Definition_DefinitionWordMeaningWordId_DefinitionWordMeaningId_DefinitionId",
+                        columns: x => new { x.DefinitionWordMeaningWordId, x.DefinitionWordMeaningId, x.DefinitionId },
                         principalTable: "Definition",
-                        principalColumns: new[] { "MeaningWordId", "MeaningId", "Id" },
+                        principalColumns: new[] { "WordMeaningWordId", "WordMeaningId", "Id" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -355,8 +355,8 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 name: "Example",
                 columns: table => new
                 {
-                    DefinitionMeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DefinitionMeaningId = table.Column<int>(type: "int", nullable: false),
+                    DefinitionWordMeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DefinitionWordMeaningId = table.Column<int>(type: "int", nullable: false),
                     DefinitionId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -364,12 +364,12 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Example", x => new { x.DefinitionMeaningWordId, x.DefinitionMeaningId, x.DefinitionId, x.Id });
+                    table.PrimaryKey("PK_Example", x => new { x.DefinitionWordMeaningWordId, x.DefinitionWordMeaningId, x.DefinitionId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Example_Definition_DefinitionMeaningWordId_DefinitionMeaningId_DefinitionId",
-                        columns: x => new { x.DefinitionMeaningWordId, x.DefinitionMeaningId, x.DefinitionId },
+                        name: "FK_Example_Definition_DefinitionWordMeaningWordId_DefinitionWordMeaningId_DefinitionId",
+                        columns: x => new { x.DefinitionWordMeaningWordId, x.DefinitionWordMeaningId, x.DefinitionId },
                         principalTable: "Definition",
-                        principalColumns: new[] { "MeaningWordId", "MeaningId", "Id" },
+                        principalColumns: new[] { "WordMeaningWordId", "WordMeaningId", "Id" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -377,8 +377,8 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 name: "Synonym",
                 columns: table => new
                 {
-                    DefinitionMeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DefinitionMeaningId = table.Column<int>(type: "int", nullable: false),
+                    DefinitionWordMeaningWordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DefinitionWordMeaningId = table.Column<int>(type: "int", nullable: false),
                     DefinitionId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -386,12 +386,12 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Synonym", x => new { x.DefinitionMeaningWordId, x.DefinitionMeaningId, x.DefinitionId, x.Id });
+                    table.PrimaryKey("PK_Synonym", x => new { x.DefinitionWordMeaningWordId, x.DefinitionWordMeaningId, x.DefinitionId, x.Id });
                     table.ForeignKey(
-                        name: "FK_Synonym_Definition_DefinitionMeaningWordId_DefinitionMeaningId_DefinitionId",
-                        columns: x => new { x.DefinitionMeaningWordId, x.DefinitionMeaningId, x.DefinitionId },
+                        name: "FK_Synonym_Definition_DefinitionWordMeaningWordId_DefinitionWordMeaningId_DefinitionId",
+                        columns: x => new { x.DefinitionWordMeaningWordId, x.DefinitionWordMeaningId, x.DefinitionId },
                         principalTable: "Definition",
-                        principalColumns: new[] { "MeaningWordId", "MeaningId", "Id" },
+                        principalColumns: new[] { "WordMeaningWordId", "WordMeaningId", "Id" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -496,13 +496,13 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 name: "Example");
 
             migrationBuilder.DropTable(
-                name: "Phonetic");
-
-            migrationBuilder.DropTable(
                 name: "QuizSessions");
 
             migrationBuilder.DropTable(
                 name: "Synonym");
+
+            migrationBuilder.DropTable(
+                name: "WordPhonetic");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -511,7 +511,7 @@ namespace EnglishNote.Infrastructure.Persistence.Migrations
                 name: "Definition");
 
             migrationBuilder.DropTable(
-                name: "Meaning");
+                name: "WordMeaning");
 
             migrationBuilder.DropTable(
                 name: "Words");

@@ -1,4 +1,2 @@
 ﻿namespace EnglishNote.Application;
-internal interface IAssemblyMarker
-{
-}
+internal interface IAssemblyMarker;

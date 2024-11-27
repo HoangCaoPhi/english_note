@@ -1,5 +1,6 @@
 ﻿using EnglishNote.Application.Abtractions.Data;
 using EnglishNote.Domain.AggregatesModel.Tags;
+using EnglishNote.Domain.AggregatesModel.Words;
 using EnglishNote.Infrastructure.Persistence.Contexts;
 using EnglishNote.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ public static class ServiceExtensions
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITagRepository, TagRepository>();
+        services.AddScoped<IWordRepository, WordRepository>();
         return services;
     }
 

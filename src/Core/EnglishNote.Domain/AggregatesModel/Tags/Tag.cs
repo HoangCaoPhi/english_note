@@ -19,11 +19,14 @@ public class Tag : AggregateRoot
 
     private Tag() { }
 
-    public static Tag CreateTag(string name, string? description, Guid userId)
+    public static Tag CreateTag(Guid id,
+        string name, 
+        string? description, 
+        Guid userId)
     {
         return new Tag()
         {
-            Id = Guid.CreateVersion7(),
+            Id = id,
             Name = name,
             Description = description,
             UserId = userId
