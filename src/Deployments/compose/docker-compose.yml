@@ -6,7 +6,7 @@ services:
       dockerfile: ../../Host/EnglishNote.Api/Dockerfile  
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__SqlServer=Server=tcp:sql-server,1433;Database=EnglishNoteDb;User=sa;Password=EnglishNote@2023!;Encrypt=False;TrustServerCertificate=True;
+      - ConnectionStrings__SqlServer=Server=tcp:sql-server,1433;Database=EnglishNoteDb;User=sa;Password=EnglishNote@2023!;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;
     depends_on:
       - sql-server
     networks:

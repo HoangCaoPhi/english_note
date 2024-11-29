@@ -14,16 +14,16 @@ internal sealed class UnitOfWork(ApplicationWriteDbContext context) : IUnitOfWor
     public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
     public bool HasActiveTransaction => _currentTransaction != null;
 
-    public async Task<IDbContextTransaction> BeginTransactionAsync()
+    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
         if (_currentTransaction != null) return null;
 
-        _currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
+        _currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
 
         return _currentTransaction;
     }
 
-    public async Task CommitTransactionAsync(IDbContextTransaction transaction)
+    public async Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(transaction);
 
@@ -32,8 +32,8 @@ internal sealed class UnitOfWork(ApplicationWriteDbContext context) : IUnitOfWor
 
         try
         {
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
+            await context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
         }
         catch
         {

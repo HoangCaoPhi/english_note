@@ -8,9 +8,11 @@ public interface IUnitOfWork
 
     IDbContextTransaction GetCurrentTransaction();
 
-    Task CommitTransactionAsync(IDbContextTransaction transaction);
+    Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken = default);
 
-    Task<IDbContextTransaction> BeginTransactionAsync();
+    Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+
+    void RollbackTransaction();
 
     Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default);
 }

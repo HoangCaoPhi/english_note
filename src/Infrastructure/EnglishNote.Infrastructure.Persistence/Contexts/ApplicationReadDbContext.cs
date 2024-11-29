@@ -1,5 +1,6 @@
 ﻿using EnglishNote.Application.Abtractions.Data;
 using EnglishNote.Domain.AggregatesModel.Tags;
+using EnglishNote.Domain.AggregatesModel.Words;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -9,8 +10,6 @@ public class ApplicationReadDbContext(ApplicationWriteDbContext context) :
 {
     public DatabaseFacade Database => context.Database;
 
-    public IQueryable<Tag> GetTags() => GetEntity<Tag>();
-
     public IQueryable<TEntity> GetEntity<TEntity>() where TEntity : class
     {
         return context
@@ -18,4 +17,7 @@ public class ApplicationReadDbContext(ApplicationWriteDbContext context) :
                 .AsNoTracking()
                 .AsQueryable();
     }
+
+    public IQueryable<Tag> GetTags() => GetEntity<Tag>();
+    public IQueryable<Word> GetWords() => GetEntity<Word>();
 }

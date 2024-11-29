@@ -17,8 +17,8 @@ internal class CreateTagCommandHandler(
             request.Description, 
             identityService.GetUserIdentity());
 
-        await tagRepository.AddAsync(tag, cancellationToken);        
-
+        await tagRepository.AddAsync(tag, cancellationToken);     
+ 
         return tag.Id;
     }
 }
