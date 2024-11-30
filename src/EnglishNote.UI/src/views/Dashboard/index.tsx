@@ -1,11 +1,14 @@
+import { AuthProvider } from "../../common/contexts/AuthContext";
 import Navbar from "../../components/Navbar";
 import { Outlet } from "react-router";
 
 export default function Dashboard() {
-    return (
+  return (
        <div>
-         <Navbar />
-         <Outlet></Outlet>
+          <AuthProvider>
+            <Navbar />
+            <Outlet></Outlet>
+          </AuthProvider>
        </div>
-      );
+  );
 }

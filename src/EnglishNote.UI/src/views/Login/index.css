@@ -1,0 +1,7 @@
+.bg-white {
+    @apply bg-white;
+}
+  
+.p-10 {
+    @apply p-10;
+}

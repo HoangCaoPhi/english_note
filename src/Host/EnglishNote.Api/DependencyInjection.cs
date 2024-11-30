@@ -56,7 +56,7 @@ public static class DependencyInjection
  
     public static IApplicationBuilder MapEndpoints(this WebApplication app)
     {
-        RouteGroupBuilder commonRoute = app.MapGroup("/")
+        RouteGroupBuilder commonRoute = app.MapGroup("/api")
             .AddEndpointFilter<HandleResultFilter>()
             .AddFluentValidationAutoValidation();
 
@@ -72,7 +72,7 @@ public static class DependencyInjection
         MapEndpointRoute<IPrivateEndpoint>(app, privateRouteGroup);
         MapEndpointRoute<IPublicEndpoint>(app, publicRouteGroup);
 
-        app.MapGroup("Identity")
+        commonRoute.MapGroup("Identity")
            .MapIdentityApi<ApplicationUser>()
            .WithTags("Identity");
 
