@@ -7,7 +7,8 @@ public enum ErrorType
     Validation = 2,
     Conflict = 3,
     AccessUnAuthorized = 4,
-    AccessForbidden = 5
+    AccessForbidden = 5,
+    Problem = 6
 }
 
 public class Error
@@ -46,4 +47,7 @@ public class Error
 
     public static Error AccessForbidden(string code, string description) =>
         new(code, description, ErrorType.AccessForbidden);
+
+    public static Error Problem(string code, string description) =>
+        new(code, description, ErrorType.Problem);
 }

@@ -3,6 +3,7 @@ using EnglishNote.Application.Abtractions.Authentication;
 using EnglishNote.Infrastructure.Authentication;
 using EnglishNote.Infrastructure.Persistence;
 using EnglishNote.Infrastructure.Services;
+using EnglishNote.Infrastructure.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +19,8 @@ public static class ServiceExtensions
 
         services
             .AddServiesLayer()
-            .AddPersistenceLayer(configuration);
+            .AddPersistenceLayer(configuration)
+            .AddStorageLayer(configuration);
         
         return services;
     }

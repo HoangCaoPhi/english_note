@@ -3,6 +3,7 @@ using EnglishNote.Api.Infrastructure.Filters;
 using EnglishNote.Api.Middlewares;
 using EnglishNote.Domain.AggregatesModel.Identity;
 using EnglishNote.Infrastructure.Persistence.Contexts;
+using EnglishNote.Infrastructure.Storage;
 using EnglishNote.Presentation.Abstractions;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -36,9 +37,10 @@ public static class DependencyInjection
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
         services.AddIdentityApiEndpoints<ApplicationUser>()
-            .AddEntityFrameworkStores<ApplicationWriteDbContext>();
+                .AddEntityFrameworkStores<ApplicationWriteDbContext>();
 
         services.ConfigureFluentValidation();
+        services.ConfigureOptions();
 
         services.AddAuthorization();
         return services;
@@ -51,6 +53,15 @@ public static class DependencyInjection
         {
             configuration.OverrideDefaultResultFactoryWith<ValidationResultFactory>();
         });
+        return services;
+    }
+
+    public static IServiceCollection ConfigureOptions(this IServiceCollection services)
+    {
+        services.AddOptions<AzureStorageOptions>()
+                .BindConfiguration(AzureStorageOptions.SectionName)
+                .ValidateOnStart();
+
         return services;
     }
  
