@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="System.Text.Encodings.Web" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\EnglishNote.Application\EnglishNote.Application.csproj" />
     <ProjectReference Include="..\EnglishNote.Infrastructure.Persistence\EnglishNote.Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\EnglishNote.Infrastructure.Storage\EnglishNote.Infrastructure.Storage.csproj" />
   </ItemGroup>
 </Project>

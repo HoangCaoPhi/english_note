@@ -14,18 +14,7 @@ internal static class AzureBlobStorageContainer
 
     public static readonly Dictionary<StorageContainer, Config> SupportedContainer = new()
     {
-        [StorageContainer.IMAGE] = new()
-        {
-            Name = "qt-package-toc",
-            AllowedFileSizeInMB = 5,
-            AllowedContentType = ["text/html", "application/pdf"]
-        },
-        [StorageContainer.ATTACHMENT] = new()
-        {
-            Name = "qt-investor-kyc",
-            AllowedFileSizeInMB = 5,
-            AllowedContentType = ["image/jpeg", "image/png"]
-        }
+       
     };
 
     public static readonly List<string> SupportedContentType = SupportedContainer.SelectMany(x => x.Value.AllowedContentType).ToList();
